@@ -174,7 +174,7 @@ p3=plot(t_p(2:end),Nw_i,'b','LineWidth',3);
 p4=plot(t_dado(2:end),Nw_cases,'k.','MarkerSize',10);
 set(gca,'FontSize',20,'LineWidth',2,'FontWeight','Bold')
 xlim([t_dado(2) t_dado(tsim)])
-ylabel('New cases')
+%ylabel('New cases')
 
 figure(1)
 subplot(2,2,2)
@@ -238,17 +238,17 @@ N=1;
 psi=Psif(floor(t+1));
 
 k = 1/4;
-gamma_a = 0.18;
+gamma_a = 1/3.5;
 gamma_s = 1/4;
-gamma_h = 0.25;
+gamma_h = 0.18;
 gamma_u = 0.13342706158133355;
 mi_u = 0.4;
 qsi = 0.53;
-h = 0.06287612499693644;
-h_v=0.015;
+h = 0.06;
+h_v=0; % h_v=0.012;
 mi_h = 0.15;
 ome_h = 0.14;
-ome_u = 0.29;
+ome_u = 0.4;
 % delta = 0.30906304338495505;
 delta = 0.31;
 p = 0.2;
@@ -257,17 +257,30 @@ p = 0.2;
 
 if t<20.178
 beta=2.1317;    %beta=1.3987731952032998;
-beta_v=0;
 elseif (t>=28.178-8)&&(t< 72.94)
 beta=1.7645;    %0.9614724422279308; 
-beta_v=0;
 elseif (t>=72.94)&&(t< 148)
 beta=1.1281;    %0.6657552424857321; 
-beta_v=beta/2;
 else 
 beta=1;
-beta_v=beta/2;
 end
+
+beta_v = beta/2
+
+% 
+% if t<20.178
+% beta=0.96;
+% beta_v=0;
+% elseif (t>=28.178-8)&&(t< 72.94)
+% beta=0.96; 
+% beta_v=0;
+% elseif (t>=72.94)&&(t< 148)
+% beta=0.96; 
+% beta_v=0;
+% else 
+% beta=0.96;
+% beta_v=0;
+% end
 
 %  New parameters
 %  Vaccination compartments parameters are 0 until starts the vaccination
@@ -287,23 +300,26 @@ if t<100
     eps=0;
     mi_vh=0;
     mi_vu=0;
-    gamma_vh=0;
+    gamma_vh=0; %     gamma_vh=0.36;
 else
-    delta_av = 0.1;
-    delta_sv = 0.2;
-    phi_e = 0.8;
+    delta_av = 0.31;
+    delta_sv = 0.31;
+    phi_e = 1/14;
 %     tau=(6.6976e-05)*1.1;
-    tau=1/100000;
     k_v=1/3;
     p_v = 0.1;
-    gamma_av = 1/2;
-    gamma_sv = 1/2;
-    gamma_vu=0.19;
+    gamma_av = 1/3.5;
+    gamma_sv = 1/4;
+    gamma_vu=0.26;
     qsi_v = 0.99;
     eps=0.7;
-    mi_vh=0.07;
+    mi_vh=0.03;
     mi_vu=0.25;
-    gamma_vh=0.25;
+    gamma_vh=0.08;
+end
+
+if t>=60
+    tau=1/1000;
 end
 
 
